@@ -20,16 +20,16 @@ $(document).ready(function(){
 });
 
 $("#mhs-select").on('change',function(){
-    updateListMahasiswa($(this).val);
+    updateListMahasiswa($(this).val());
 });
 
     function updateListMahasiswa(opt){
         var result='';
         var _url2=_url;
         if(opt!=='semua'){
-            _url2=url +'?gender='+opt;   
+            _url2=_url +'?gender='+opt;   
         }
-        $.get(_url,function(data){
+        $.get(_url2,function(data){
             $.each(data,function(key,items ){
                 _gend=items.gender;
                 result +='<div><h3>'+items.name+'</h3><p>'+_gend+'</p></div>';
@@ -38,3 +38,15 @@ $("#mhs-select").on('change',function(){
     });
     }
 });
+
+if('serviceWorker'in navigator){
+    window.addEventListener('load',function(){
+        navigator.serviceWorker.register('/serviceworker.js').then(
+            function(reg){
+                console.log('sukses sw:,scope',reg.scope);
+            },function (err){
+                console.log('gagal sw:,scope:',err); 
+            }
+        )
+    })
+}
